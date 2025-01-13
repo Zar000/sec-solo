@@ -1,11 +1,22 @@
 #include <stdio.h>
 #include <iostream>
 #include "user.h"
+#include <openssl/evp.h>
+#include <sstream>
+#include <iomanip>
 
-std::string encStr(std::string i){
-    //encrypt string and return it
+std::string encStr(const std::string& i) {
+    unsigned char digest[EVP_MAX_MD_SIZE];
+    unsigned int digestLength = 0;
 
-    return i; // temp
+    EVP_Digest(i.data(), i.size(), digest, &digestLength, EVP_md5(), nullptr);
+
+    std::ostringstream oss;
+    for (unsigned int i = 0; i < digestLength; i++) {
+        oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(digest[i]);
+    }
+
+    return oss.str();
 }
 
 void storeUser(user u){
@@ -16,6 +27,8 @@ user getUser(std::string email, std::string pw){
     //call encStr for both email and pw, cross reference with file to see if anything matches
     //if email is correct, store it and query terminal for another pw attempt
     //provide option to break loop
+    user u("bruh", "bruh");
+    return u;
 }
 
 bool isValidPw(std::string i){
@@ -37,8 +50,10 @@ bool isValidMenuInp(std::string i){
 }
 
 int main(){
-    while(1){
+    std::string inp = "YOYOYOY";
+    std::string encInp = encStr(inp);
 
-    }
+    std::cout << inp << " That was the initial message, now comes the encrypted message = " << std::endl;
+    std::cout << encInp;
     return 0;
 }
