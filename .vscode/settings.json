@@ -1,0 +1,14 @@
+{
+    "makefile.makePath": "C:\\msys64\\usr\\bin",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "c:\\Users\\uwu\\_Dev\\C++\\sec-solo",
+            "binaryPath": "c:\\Users\\uwu\\_Dev\\C++\\sec-solo\\main.exe",
+            "binaryArgs": []
+        }
+    ],
+    "files.associations": {
+        ".fantomasignore": "ignore",
+        "xstring": "cpp"
+    }
+}
