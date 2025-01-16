@@ -5,6 +5,11 @@
             "cwd": "c:\\Users\\uwu\\_Dev\\C++\\sec-solo",
             "binaryPath": "c:\\Users\\uwu\\_Dev\\C++\\sec-solo\\main.exe",
             "binaryArgs": []
+        },
+        {
+            "cwd": "c:\\Users\\maksy\\_Dev\\C++\\sec-solo",
+            "binaryPath": "c:\\Users\\maksy\\_Dev\\C++\\sec-solo\\main.exe",
+            "binaryArgs": []
         }
     ],
     "files.associations": {
@@ -50,5 +55,6 @@
         "locale": "cpp",
         "xlocbuf": "cpp",
         "xlocmes": "cpp"
-    }
+    },
+    "makefile.configureOnOpen": false
 }

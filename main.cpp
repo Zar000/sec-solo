@@ -50,7 +50,7 @@ bool isValidMenuInp(std::string i){
 }
 
 int main(){
-    std::string inp = "YOYOYOY";
+    std::string inp = "johan";
     std::string encInp = encStr(inp);
 
     std::cout << inp << " That was the initial message, now comes the encrypted message = " << std::endl;
