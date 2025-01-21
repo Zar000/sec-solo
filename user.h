@@ -11,8 +11,8 @@ private:
 
 public:
     user(std::string email, std::string pw);
-    std::string *getPw();
-    std::string *getEmail();
+    std::string getPw();
+    std::string getEmail();
 
 };
 
