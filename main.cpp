@@ -37,15 +37,11 @@ user getUser(std::string email, std::string pw){
 }
 
 bool isValidPw(std::string i){
-    //verify that password contains the following
-    //is atleast 8 characters long, has atleast 1 uppercase letter
-    //has atleast 1 lowercase letter, atleast 1 number, has atleast 1 special character
     std::regex password("^(?=.*[!@#$%^&*(),.?\":{}|<>])(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,}$");
     return std::regex_match(i, password);
 }
 
 bool isValidEmail(std::string i){
-    //verify that email contains @ and ends with " . " and max 3 letters behind the " . "
     std::regex email("^.{1,32}@.{1,16}\\.[a-zA-Z]{2,3}$");
     return std::regex_match(i, email);
 }

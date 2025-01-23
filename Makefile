@@ -1,6 +1,6 @@
 PROG = main.exe 
 SRC = main.cpp user.cpp
-CFLAGS = -g -std=c++17
+CFLAGS = -g -std=c++17 -Wall -Werror
 LIBS = -lssl -lcrypto 
 CC=g++
 
