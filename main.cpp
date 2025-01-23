@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <regex>
 
+
 std::string encStr(const std::string& i) {
     unsigned char digest[EVP_MAX_MD_SIZE];
     unsigned int digestLength = 0;
@@ -23,7 +24,7 @@ std::string encStr(const std::string& i) {
 void storeUser(user u){
     std::string email = u.getEmail();
     std::string password = encStr(u.getPw());
-    //store email and password
+    //store email and password in file
 
 }
 
@@ -45,24 +46,65 @@ bool isValidPw(std::string i){
 
 bool isValidEmail(std::string i){
     //verify that email contains @ and ends with " . " and max 3 letters behind the " . "
-    std::regex email("^.{1,32}@.{1,16}\\.[a-zA-Z]{1,3}$");
+    std::regex email("^.{1,32}@.{1,16}\\.[a-zA-Z]{2,3}$");
     return std::regex_match(i, email);
 }
 
 bool isValidMenuInp(std::string i){
-    //verify input to be only numbers between 0-9
+    std::regex menInp("^[0-9]+$");
+    if (!std::regex_match(i, menInp)) {
+        std::cout << "Please input a number" << std::endl;
+        return false;
+    }
     int inp = std::stoi(i);
     if(inp > 9 || inp < 0){
+        std::cout << " Please enter a number between 1 and 3" << std::endl;
         return false;   
     } 
     return true;
 }
 
 int main(){
-    std::string inp = "johan";
-    std::string encInp = encStr(inp);
+    int userInp = 0;
+    while(1){
+        std::cout << " Press 1 to create a new user " << std::endl 
+                  << " Press 2 to sign in " << std::endl 
+                  << " Press 3 to exit " << std::endl;
+        std::string sInp;
+        std::cin >> sInp;
+        if(!isValidMenuInp(sInp)){
+            continue;
+        }
+        userInp = std::stoi(sInp);
+        if(userInp == 1){
+            std::string newEmail = "";
+            std::cout << " Please input an email" << std::endl;
+            std::string userInput;
+            std::cin >> userInput;
+            if(!isValidEmail(userInput)){
+                std::cout << " Invalid email, please make sure to contain @ and .com or similar at the end" << std::endl;
+                continue;
+            }
+            newEmail = userInput;
+            std::cout << " Please input a password" << std::endl;
+            std::string newPassword = "";
+            while(newPassword.empty()){
+                std::cin >> userInput;
+                if(isValidPw(userInput)){
+                    newPassword = userInput;
+                    break;
+                }
+                std::cout << " Invalid password, please try again." << std::endl;
+                continue;
+            }
+            user newUser(newEmail, newPassword);
+            storeUser(newUser);
+        }else if(userInp == 2){
+            // try to sign in
+        }else if(userInp == 3){
+            return 0; // exit prog
+        }
 
-    std::cout << inp << " That was the initial message, now comes the encrypted message = " << std::endl;
-    std::cout << encInp;
+    }
     return 0;
 }
