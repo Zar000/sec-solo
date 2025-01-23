@@ -60,7 +60,7 @@ bool isValidMenuInp(std::string i){
     return true;
 }
 
-int main(){
+int main(void){
     int userInp = 0;
     while(1){
         std::cout << " Press 1 to create a new user " << std::endl 
