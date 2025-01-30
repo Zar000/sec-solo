@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <regex>
+#include <fstream>
 
 
 std::string encStr(const std::string& i) {
@@ -24,7 +25,13 @@ std::string encStr(const std::string& i) {
 void storeUser(user u){
     std::string email = u.getEmail();
     std::string password = encStr(u.getPw());
-    //store email and password in file
+    std::ofstream file("users.txt", std::ios::app);
+    if(file.is_open()){
+        file << email << "," << password << "\n";
+        file.close();
+    }else {
+        std::cerr << "Cant open file" << std::endl;
+    }
 
 }
 
@@ -32,6 +39,11 @@ user getUser(std::string email, std::string pw){
     //if email is correct, store it
     //ask for password, call encstr on pw and cross reference with the matching email on the same line.
     //provide option to break loop
+    std::ifstream file("users.txt");
+    std::string line;
+    while(getline(file, line)){
+        
+    }
     user u("bruh", "bruh"); // temp so func doesnt error DELETE AFTER
     return u;
 }
@@ -53,7 +65,7 @@ bool isValidMenuInp(std::string i){
         return false;
     }
     int inp = std::stoi(i);
-    if(inp > 9 || inp < 0){
+    if(inp > 3 || inp <= 0){
         std::cout << " Please enter a number between 1 and 3" << std::endl;
         return false;   
     } 
