@@ -42,10 +42,24 @@ user getUser(std::string email, std::string pw){
     std::ifstream file("users.txt");
     std::string line;
     while(getline(file, line)){
-        
+        std::stringstream ss(line);
+        std::string storedEmail, storedPassword;
+        if(getline(ss, storedEmail, ',') && getline(ss, storedPassword)){
+            if(storedEmail == email){
+                if(encStr(pw) == storedPassword){
+                    user u(storedEmail, pw);
+                    return u;
+                }else{
+                    std::cout << " Invalid password, please try again" << std::endl;
+                    break;
+                }
+            }else{
+                std::cout << " Invalid email, please try again" << std::endl;
+                break;
+            }
+        }
     }
-    user u("bruh", "bruh"); // temp so func doesnt error DELETE AFTER
-    return u;
+    return {"", ""};
 }
 
 bool isValidPw(std::string i){
@@ -108,7 +122,21 @@ int main(void){
             user newUser(newEmail, newPassword);
             storeUser(newUser);
         }else if(userInp == 2){
-            // try to sign in
+            std::cout << " Please input an email" << std::endl;
+            std::string userInput;
+            std::cin >> userInput;
+            std::string logEmail = userInput;
+            std::cout << " Please input a password" << std::endl;
+            std::cin >> userInput;
+            std::string logPassword = userInput;
+            user logU = getUser(logEmail, logPassword);
+            if(logU.getEmail() == "" || logU.getPw() == ""){
+                std::cout << " Invalid user " << std::endl;
+                break;
+            }
+            std::cout << "User email is = " << logU.getEmail() << std::endl 
+                      << "User password is = " << logU.getPw() << std::endl 
+                      << "User encrypted password is = " << encStr(logU.getPw()) << std::endl;
         }else if(userInp == 3){
             return 0; // exit prog
         }
