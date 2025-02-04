@@ -128,6 +128,7 @@ int main(void){
                 std::cout << "Invalid user " << std::endl;
                 break;
             }
+            std::cout << "Login success!" << std::endl;
             std::cout << "User email is = " << logEmail << std::endl 
                       << "User password is = " << logPassword << std::endl 
                       << "User encrypted password is = " << encStr(logU.getPw()) << std::endl;
