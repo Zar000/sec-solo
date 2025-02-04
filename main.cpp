@@ -36,29 +36,23 @@ void storeUser(user u){
 }
 
 user getUser(std::string email, std::string pw){
-    //if email is correct, store it
-    //ask for password, call encstr on pw and cross reference with the matching email on the same line.
-    //provide option to break loop
     std::ifstream file("users.txt");
     std::string line;
-    while(getline(file, line)){
+    while (getline(file, line)) {
         std::stringstream ss(line);
         std::string storedEmail, storedPassword;
-        if(getline(ss, storedEmail, ',') && getline(ss, storedPassword)){
-            if(storedEmail == email){
-                if(encStr(pw) == storedPassword){
-                    user u(storedEmail, pw);
-                    return u;
-                }else{
-                    std::cout << " Invalid password, please try again" << std::endl;
-                    break;
+        if (getline(ss, storedEmail, ',') && getline(ss, storedPassword)) {
+            if (storedEmail == email) {
+                if (encStr(pw) == storedPassword) {
+                    return user(storedEmail, storedPassword);
+                } else {
+                    std::cout << "Invalid password, please try again" << std::endl;
+                    return {"", ""};
                 }
-            }else{
-                std::cout << " Invalid email, please try again" << std::endl;
-                break;
             }
         }
     }
+    std::cout << "Invalid email, please try again" << std::endl;
     return {"", ""};
 }
 
@@ -131,16 +125,15 @@ int main(void){
             std::string logPassword = userInput;
             user logU = getUser(logEmail, logPassword);
             if(logU.getEmail() == "" || logU.getPw() == ""){
-                std::cout << " Invalid user " << std::endl;
+                std::cout << "Invalid user " << std::endl;
                 break;
             }
-            std::cout << "User email is = " << logU.getEmail() << std::endl 
-                      << "User password is = " << logU.getPw() << std::endl 
+            std::cout << "User email is = " << logEmail << std::endl 
+                      << "User password is = " << logPassword << std::endl 
                       << "User encrypted password is = " << encStr(logU.getPw()) << std::endl;
         }else if(userInp == 3){
             return 0; // exit prog
         }
-
     }
     return 0;
 }
