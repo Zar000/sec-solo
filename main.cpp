@@ -8,11 +8,12 @@
 #include <fstream>
 
 
-std::string encStr(const std::string& i) {
+std::string encStr(const std::string& i, const std::string& email) {
     unsigned char digest[EVP_MAX_MD_SIZE];
     unsigned int digestLength = 0;
+    std::string saltInp = email + i;
 
-    EVP_Digest(i.data(), i.size(), digest, &digestLength, EVP_md5(), nullptr);
+    EVP_Digest(saltInp.data(), saltInp.size(), digest, &digestLength, EVP_md5(), nullptr);
 
     std::ostringstream oss;
     for (unsigned int i = 0; i < digestLength; i++) {
@@ -24,7 +25,7 @@ std::string encStr(const std::string& i) {
 
 void storeUser(user u){
     std::string email = u.getEmail();
-    std::string password = encStr(u.getPw());
+    std::string password = encStr(u.getPw(), email);
     std::ofstream file("users.txt", std::ios::app);
     if(file.is_open()){
         file << email << "," << password << "\n";
@@ -43,7 +44,7 @@ user getUser(std::string email, std::string pw){
         std::string storedEmail, storedPassword;
         if (getline(ss, storedEmail, ',') && getline(ss, storedPassword)) {
             if (storedEmail == email) {
-                if (encStr(pw) == storedPassword) {
+                if (encStr(pw, email) == storedPassword) {
                     return user(storedEmail, storedPassword);
                 } else {
                     std::cout << "Invalid password, please try again" << std::endl;
@@ -131,7 +132,7 @@ int main(void){
             std::cout << "Login success!" << std::endl;
             std::cout << "User email is = " << logEmail << std::endl 
                       << "User password is = " << logPassword << std::endl 
-                      << "User encrypted password is = " << encStr(logU.getPw()) << std::endl;
+                      << "User encrypted password is = " << encStr(logU.getPw(), logEmail) << std::endl;
         }else if(userInp == 3){
             return 0; // exit prog
         }
