@@ -1,2 +1,2 @@
-# Project to crack sha256 passwords using the most common passwords 
-# Link to password encrypter can be found here https://github.com/Zar000/sec-solo
+# Project to encrypt passwords with sha256 
+# Link to password cracker can be found here https://github.com/Zar000/new-sec-vg/tree/main
